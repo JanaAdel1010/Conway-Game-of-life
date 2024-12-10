@@ -39,7 +39,15 @@ void *compute_next_gen(void *arg)
     int id = *(int *)arg;
     int thread_r = GRID_SIZE / NUM_THREADS;
     int start = id * thread_r;
-    int end = (id == NUM_THREADS - 1) ? GRID_SIZE : start + thread_r;
+    int end;
+    if (id == NUM_THREADS - 1)
+    {
+         end = GRID_SIZE;
+    }
+    else
+    {
+         end = start + thread_r;
+    }
 
     for (int gen_index = 0; gen_index < GENERATIONS; gen_index++)
     {
@@ -54,7 +62,7 @@ void *compute_next_gen(void *arg)
                     for (int y = -1; y <= 1; y++)
                     {
                         if (x == 0 && y == 0)
-                            continue; // Skip the cell itself
+                            continue; 
                         Alive += grid[(i + x + GRID_SIZE) % GRID_SIZE][(j + y + GRID_SIZE) % GRID_SIZE];
                     }
                 }
