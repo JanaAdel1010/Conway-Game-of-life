@@ -10,7 +10,7 @@
 #define GENERATIONS 32
 
 int grid[GRID_SIZE][GRID_SIZE];
-int next_grid[GRID_SIZE][GRID_SIZE];
+int temp[GRID_SIZE][GRID_SIZE];
 pthread_barrier_t barrier;
 
 void print_grid()
@@ -71,22 +71,22 @@ void *compute_next_gen(void *arg)
                 {
                     if (Alive == 2 || Alive == 3)
                     {
-                        next_grid[i][j] = 1;
+                        temp[i][j] = 1;
                     }
                     else
                     {
-                        next_grid[i][j] = 0;
+                        temp[i][j] = 0;
                     }
                 }
                 else
                 {
                     if (Alive == 3)
                     {
-                        next_grid[i][j] = 1;
+                        temp[i][j] = 1;
                     }
                     else
                     {
-                        next_grid[i][j] = 0;
+                        temp[i][j] = 0;
                     }
                 }
             }
@@ -100,7 +100,7 @@ void *compute_next_gen(void *arg)
             {
                 for (int j = 0; j < GRID_SIZE; j++)
                 {
-                    grid[i][j] = next_grid[i][j];
+                    grid[i][j] = temp[i][j];
                 }
             }
             print_grid();
@@ -118,7 +118,7 @@ void initialize_grid(int grid[GRID_SIZE][GRID_SIZE])
     {
         for (int j = 0; j < GRID_SIZE; j++)
         {
-            grid[i][j] = 0; // Set every cell to 0 (dead)
+            grid[i][j] = 0; 
         }
     }
 }
